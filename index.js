@@ -11,19 +11,30 @@ const { dbConection } = require('./database/config');
 //crear el servidor de express
 const app = express();
 
+
+
 //Configurar CORS
 app.use( cors() );
+
+
+
+//Lectura y parseo del body
+app.use( express.json() );
+
 
 //BASE DE DATOS
 dbConection();
 
+
+
+
 //Rutas
-app.get( '/', (req, res) => {
-    res.json({
-        ok:true,
-        msg:'Hola mundo'
-    });
-});
+app.use('/api/usuarios', require('./routes/usuarios.routes'));
+app.use('/api/login', require('./routes/auth.routes'));
+
+
+
+
 
 
 app.listen( process.env.PORT, () => {
